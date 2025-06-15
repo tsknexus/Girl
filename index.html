@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Falling Letters</title>
+  <style>
+    
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+    }
+    #welcomena{
+          position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: hwb(120 0% 0%);
+      font-size: 48px;
+      font-family: cursive;
+      z-index: 10; /* on top of letters */
+      text-align: center;
+    }
+    .letter {
+      position: absolute;
+      top: -50px;
+      color: hwb(120 0% 0%);
+      font-size: 24px;
+      font-family: monospace;
+      user-select: none;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<h1 id="welcomena">Hello!</h1>
+<body>
+
+<script>
+    var wel = document.getElementById("welcomena");
+  var letters = window.prompt("Enter your name");
+
+ wel.textContent= "Welcome "+ letters;
+
+  function createLetter() {
+    const span = document.createElement('span');
+    span.className = 'letter';
+    span.innerText = letters.charAt(Math.floor(Math.random() * letters.length));
+
+    span.style.left = Math.random() * window.innerWidth + 'px';
+    document.body.appendChild(span);
+
+    let top = -50;
+    const speed = 2 + Math.random() * 3;
+
+    function fall() {
+      top += speed;
+      span.style.top = top + 'px';
+
+      if (top < window.innerHeight) {
+        requestAnimationFrame(fall);
+      } else {
+        span.remove();
+      }
+    }
+
+    fall();
+  }
+
+  // Generate letters repeatedly
+  setInterval(createLetter, 60);
+</script>
+
+</body>
+</html>
